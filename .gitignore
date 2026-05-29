@@ -1,0 +1,31 @@
+# Dépendances
+node_modules/
+
+# Builds
+dist/
+out-tsc/
+.angular/
+
+# Base de données SQLite locale (jamais versionnée)
+prisma/dev.db
+prisma/dev.db-journal
+prisma/migrations/dev/
+
+# Variables d'environnement
+# NOTE : .env est CONSERVÉ ici car il ne contient PAS de secret (juste le chemin
+# de la SQLite locale "file:./dev.db"). Sans lui, `prisma generate` plante au
+# clone. On ignore juste les variantes locales privées.
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Système
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

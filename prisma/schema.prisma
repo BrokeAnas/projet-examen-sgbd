@@ -1,0 +1,199 @@
+// ============================================================================
+//  SCHÉMA PRISMA — GymManager
+// ----------------------------------------------------------------------------
+//  Ce fichier décrit la structure de la base de données SQLite locale.
+//  Prisma le lit pour :
+//   1) générer les types TypeScript (PrismaClient) → npx prisma generate
+//   2) créer/mettre à jour la base via migrations → npx prisma migrate dev
+//
+//  Convention : pour chaque relation, je mets en commentaire l'équivalent SQL
+//  (la ligne FOREIGN KEY que Prisma génère sous le capot dans la migration).
+// ============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // SQLite local, fichier dev.db dans le dossier prisma/.
+  // AUCUN service cloud — tout reste sur la machine.
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ----------------------------------------------------------------------------
+//  ÉNUMÉRATIONS
+// ----------------------------------------------------------------------------
+//  Note SGBD : SQLite ne supporte pas nativement les ENUM. Prisma les simule
+//  en stockant la valeur sous forme de TEXT et en contraignant côté client.
+//  Avantage pédagogique : type-safe en TS, valeurs limitées et lisibles.
+// ----------------------------------------------------------------------------
+
+// Statut d'un membre dans la salle :
+//  - ACTIF    : peut s'inscrire à des séances, son abonnement court
+//  - SUSPENDU : temporairement bloqué (impayé, blessure, etc.)
+//  - RESILIE  : a quitté la salle, on garde son historique pour comptabilité
+enum StatutMembre {
+  ACTIF
+  SUSPENDU
+  RESILIE
+}
+
+// Durée de l'abonnement souscrit par un membre :
+//  - MENSUEL     : 1 mois (~49,90 €)
+//  - TRIMESTRIEL : 3 mois (~129 €)
+//  - ANNUEL      : 12 mois (~449 €)
+enum TypeAbonnement {
+  MENSUEL
+  TRIMESTRIEL
+  ANNUEL
+}
+
+// ============================================================================
+//  MODÈLES
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+//  Membre : adhérent de la salle de sport.
+// ----------------------------------------------------------------------------
+model Membre {
+  id              Int          @id @default(autoincrement())
+  nom             String
+  prenom          String
+  email           String       @unique
+  dateInscription DateTime     @default(now())
+  statut          StatutMembre @default(ACTIF)
+
+  // 1:N Membre → Abonnement (historique des abonnements souscrits).
+  abonnements  Abonnement[]
+  // N:M Membre ↔ Seance via la table de jonction explicite "Inscription".
+  inscriptions Inscription[]
+}
+
+// ----------------------------------------------------------------------------
+//  Coach : entraîneur qui anime des cours.
+// ----------------------------------------------------------------------------
+model Coach {
+  id           Int      @id @default(autoincrement())
+  nom          String
+  prenom       String
+  specialite   String // ex: "Yoga", "CrossFit"
+  dateEmbauche DateTime @default(now())
+  salaire      Float // en euros, stocké en REAL
+
+  // 1:N Coach → Cours (un coach anime plusieurs cours).
+  cours Cours[]
+}
+
+// ----------------------------------------------------------------------------
+//  Cours : type d'activité proposé par la salle (ex: "Yoga débutant").
+// ----------------------------------------------------------------------------
+model Cours {
+  id           Int     @id @default(autoincrement())
+  titre        String
+  description  String?
+  dureeMinutes Int
+  capaciteMax  Int
+
+  // SQL : FOREIGN KEY (coachId) REFERENCES Coach(id) ON DELETE RESTRICT
+  //
+  // Restrict : on refuse de supprimer un coach qui anime encore des cours.
+  // Règle métier : protéger la référence pédagogique. L'admin doit d'abord
+  // réassigner les cours à un autre coach.
+  coachId Int
+  coach   Coach @relation(fields: [coachId], references: [id], onDelete: Restrict)
+
+  // 1:N Cours → Seance (un cours est planifié dans plusieurs séances datées).
+  seances Seance[]
+}
+
+// ----------------------------------------------------------------------------
+//  Salle : pièce/lieu physique où se déroule une séance.
+// ----------------------------------------------------------------------------
+model Salle {
+  id          Int     @id @default(autoincrement())
+  nom         String
+  capacite    Int
+  equipements String?
+
+  // 1:N Salle → Seance (une salle accueille plusieurs séances).
+  seances Seance[]
+}
+
+// ----------------------------------------------------------------------------
+//  Seance : instance DATÉE d'un cours dans une salle.
+//  Concrètement : "Yoga débutant le 18/05/2026 à 18h en salle Zen".
+// ----------------------------------------------------------------------------
+model Seance {
+  id        Int      @id @default(autoincrement())
+  dateHeure DateTime
+
+  // SQL: FOREIGN KEY (coursId) REFERENCES Cours(id) ON DELETE CASCADE
+  //
+  // Choix Cascade : si on supprime un cours, toutes ses séances disparaissent
+  // automatiquement (elles n'auraient plus de sens sans le cours parent).
+  coursId Int
+  cours   Cours @relation(fields: [coursId], references: [id], onDelete: Cascade)
+
+  // SQL: FOREIGN KEY (salleId) REFERENCES Salle(id) ON DELETE RESTRICT
+  //
+  // Choix Restrict : on REFUSE la suppression d'une salle qui a encore des
+  // séances planifiées. Sécurité métier.
+  salleId Int
+  salle   Salle @relation(fields: [salleId], references: [id], onDelete: Restrict)
+
+  // N:M avec Membre via Inscription.
+  inscriptions Inscription[]
+}
+
+// ----------------------------------------------------------------------------
+//  Inscription : table de jonction EXPLICITE entre Membre et Seance.
+//
+//  Pourquoi explicite plutôt qu'implicite ?
+//  → Parce qu'on veut stocker des CHAMPS SUPPLÉMENTAIRES sur la relation :
+//    - dateInscription : quand le membre s'est inscrit
+//    - presence        : est-il venu ou non
+//
+//  Avec une relation implicite (`Seance[]` ↔ `Membre[]`), Prisma créerait une
+//  table cachée sans pouvoir y ajouter de colonnes. Ici on en a besoin.
+//
+//  Clé primaire composite : un membre ne peut s'inscrire qu'UNE SEULE FOIS à
+//  une séance donnée (contrainte d'unicité naturelle).
+//  SQL équivalent: PRIMARY KEY (membreId, seanceId)
+// ----------------------------------------------------------------------------
+model Inscription {
+  // SQL: FOREIGN KEY (membreId) REFERENCES Membre(id) ON DELETE CASCADE
+  // Cascade : si on supprime le membre, ses inscriptions historiques partent
+  // avec lui (sinon on aurait des lignes orphelines).
+  membreId Int
+  membre   Membre @relation(fields: [membreId], references: [id], onDelete: Cascade)
+
+  // SQL: FOREIGN KEY (seanceId) REFERENCES Seance(id) ON DELETE CASCADE
+  // Cascade : si on annule une séance, on supprime les inscriptions liées.
+  seanceId Int
+  seance   Seance @relation(fields: [seanceId], references: [id], onDelete: Cascade)
+
+  dateInscription DateTime @default(now())
+  presence        Boolean  @default(false)
+
+  // Clé primaire composite — un seul couple (membre, séance) possible.
+  @@id([membreId, seanceId])
+}
+
+// ----------------------------------------------------------------------------
+//  Abonnement : période payée par un membre (mensuel/trimestriel/annuel).
+// ----------------------------------------------------------------------------
+model Abonnement {
+  id        Int            @id @default(autoincrement())
+  type      TypeAbonnement
+  prix      Float
+  dateDebut DateTime
+  dateFin   DateTime
+
+  // SQL: FOREIGN KEY (membreId) REFERENCES Membre(id) ON DELETE CASCADE
+  //
+  // Choix Cascade : on supprime tout l'historique d'abonnements d'un membre
+  // quand il est supprimé (RGPD : droit à l'effacement).
+  membreId Int
+  membre   Membre @relation(fields: [membreId], references: [id], onDelete: Cascade)
+}

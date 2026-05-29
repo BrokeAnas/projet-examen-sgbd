@@ -1,0 +1,180 @@
+<mxfile host="app.diagrams.net" agent="GymManager" version="22.0.0" type="device">
+  <diagram name="GymManager-ERD" id="gym-erd">
+    <mxGraphModel dx="1422" dy="754" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ============ MEMBRE ============ -->
+        <mxCell id="membre" value="Membre" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontSize=14;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="220" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="m_id" value="id : Int (PK)" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="membre">
+          <mxGeometry y="30" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="m_nom" value="nom : String" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="membre">
+          <mxGeometry y="56" width="220" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="m_prenom" value="prenom : String" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="membre">
+          <mxGeometry y="80" width="220" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="m_email" value="email : String (UNIQUE)" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="membre">
+          <mxGeometry y="104" width="220" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="m_date" value="dateInscription : DateTime" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="membre">
+          <mxGeometry y="128" width="220" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="m_statut" value="statut : Enum StatutMembre" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="membre">
+          <mxGeometry y="152" width="220" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- ============ COACH ============ -->
+        <mxCell id="coach" value="Coach" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontSize=14;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="320" y="40" width="220" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c_id" value="id : Int (PK)" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="coach">
+          <mxGeometry y="30" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="c_nom" value="nom : String" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="coach">
+          <mxGeometry y="56" width="220" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="c_prenom" value="prenom : String" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="coach">
+          <mxGeometry y="80" width="220" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="c_spec" value="specialite : String" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="coach">
+          <mxGeometry y="104" width="220" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="c_date" value="dateEmbauche : DateTime" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="coach">
+          <mxGeometry y="128" width="220" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="c_salaire" value="salaire : Float" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="coach">
+          <mxGeometry y="152" width="220" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- ============ COURS ============ -->
+        <mxCell id="cours" value="Cours" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontSize=14;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="600" y="40" width="240" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="co_id" value="id : Int (PK)" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="cours">
+          <mxGeometry y="30" width="240" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="co_titre" value="titre : String" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="cours">
+          <mxGeometry y="56" width="240" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="co_desc" value="description : String?  (nullable)" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="cours">
+          <mxGeometry y="80" width="240" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="co_duree" value="dureeMinutes : Int" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="cours">
+          <mxGeometry y="104" width="240" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="co_cap" value="capaciteMax : Int" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="cours">
+          <mxGeometry y="128" width="240" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="co_coachId" value="coachId : Int (FK → Coach.id, RESTRICT)" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=#fff2cc;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="cours">
+          <mxGeometry y="152" width="240" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- ============ SALLE ============ -->
+        <mxCell id="salle" value="Salle" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontSize=14;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="280" width="220" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="sa_id" value="id : Int (PK)" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="salle">
+          <mxGeometry y="30" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="sa_nom" value="nom : String" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="salle">
+          <mxGeometry y="56" width="220" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="sa_cap" value="capacite : Int" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="salle">
+          <mxGeometry y="80" width="220" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="sa_eq" value="equipements : String?  (nullable)" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="salle">
+          <mxGeometry y="104" width="220" height="26" as="geometry" />
+        </mxCell>
+
+        <!-- ============ SEANCE ============ -->
+        <mxCell id="seance" value="Seance" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontSize=14;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="320" y="280" width="260" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="se_id" value="id : Int (PK)" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="seance">
+          <mxGeometry y="30" width="260" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="se_date" value="dateHeure : DateTime" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="seance">
+          <mxGeometry y="56" width="260" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="se_coursId" value="coursId : Int (FK → Cours.id, CASCADE)" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=#fff2cc;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="seance">
+          <mxGeometry y="80" width="260" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="se_salleId" value="salleId : Int (FK → Salle.id, RESTRICT)" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=#fff2cc;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="seance">
+          <mxGeometry y="106" width="260" height="26" as="geometry" />
+        </mxCell>
+
+        <!-- ============ INSCRIPTION (N:M) ============ -->
+        <mxCell id="ins" value="Inscription  (table de jonction N:M)" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontSize=13;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="640" y="280" width="280" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="i_m" value="membreId : Int  (PK + FK → Membre, CASCADE)" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=#fff2cc;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="ins">
+          <mxGeometry y="30" width="280" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="i_s" value="seanceId : Int  (PK + FK → Seance, CASCADE)" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=#fff2cc;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="ins">
+          <mxGeometry y="60" width="280" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="i_date" value="dateInscription : DateTime" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="ins">
+          <mxGeometry y="90" width="280" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="i_pres" value="presence : Boolean" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="ins">
+          <mxGeometry y="124" width="280" height="36" as="geometry" />
+        </mxCell>
+
+        <!-- ============ ABONNEMENT ============ -->
+        <mxCell id="abo" value="Abonnement" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontSize=14;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="40" y="480" width="260" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="a_id" value="id : Int (PK)" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="abo">
+          <mxGeometry y="30" width="260" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="a_type" value="type : Enum TypeAbonnement" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="abo">
+          <mxGeometry y="56" width="260" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="a_prix" value="prix : Float" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="abo">
+          <mxGeometry y="80" width="260" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="a_debut" value="dateDebut : DateTime" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="abo">
+          <mxGeometry y="104" width="260" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="a_fin" value="dateFin : DateTime" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="abo">
+          <mxGeometry y="128" width="260" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="a_membre" value="membreId : Int (FK → Membre, CASCADE)" style="shape=partialRectangle;html=1;whiteSpace=wrap;fillColor=#fff2cc;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=8;" vertex="1" parent="abo">
+          <mxGeometry y="152" width="260" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- ============ ARRÊTES (RELATIONS) ============ -->
+        <!-- Coach 1 — N Cours -->
+        <mxCell id="r1" style="endArrow=ERmany;startArrow=ERone;edgeStyle=entityRelationEdgeStyle;curved=0;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="coach" target="cours">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Cours 1 — N Seance -->
+        <mxCell id="r2" style="endArrow=ERmany;startArrow=ERone;edgeStyle=entityRelationEdgeStyle;curved=0;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="cours" target="seance">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Salle 1 — N Seance -->
+        <mxCell id="r3" style="endArrow=ERmany;startArrow=ERone;edgeStyle=entityRelationEdgeStyle;curved=0;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="salle" target="seance">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Seance 1 — N Inscription -->
+        <mxCell id="r4" style="endArrow=ERmany;startArrow=ERone;edgeStyle=entityRelationEdgeStyle;curved=0;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="seance" target="ins">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Membre 1 — N Inscription -->
+        <mxCell id="r5" style="endArrow=ERmany;startArrow=ERone;edgeStyle=entityRelationEdgeStyle;curved=0;rounded=0;" edge="1" parent="1" source="membre" target="ins">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Membre 1 — N Abonnement -->
+        <mxCell id="r6" style="endArrow=ERmany;startArrow=ERone;edgeStyle=entityRelationEdgeStyle;curved=0;rounded=0;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="membre" target="abo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

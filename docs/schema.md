@@ -1,6 +1,5 @@
 # Schéma de la base de données
 
-## Diagramme Mermaid (à coller dans draw.io ou un viewer Mermaid)
 
 ```mermaid
 erDiagram

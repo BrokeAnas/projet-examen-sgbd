@@ -563,12 +563,6 @@ export function registerIpcHandlers(): void {
   //  seul coup (COMMIT), soit AUCUN n'est appliqué (ROLLBACK automatique
   //  si une exception est levée à l'intérieur du callback).
   //
-  //  Principe ACID rappelé :
-  //   • Atomicité  : tout ou rien (c'est ce qu'on cherche ici)
-  //   • Cohérence  : la base reste dans un état valide
-  //   • Isolation  : les transactions concurrentes ne s'interfèrent pas
-  //   • Durabilité : une fois COMMIT, c'est gravé sur disque
-  //
   //  SQL équivalent généré sous le capot :
   //    BEGIN TRANSACTION;
   //      INSERT INTO Abonnement (type, prix, dateDebut, dateFin, membreId)
